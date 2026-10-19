@@ -2,6 +2,8 @@ import express, { Express, Request, Response } from "express";
 import bodyParser from "body-parser";
 import { IServerConfig } from "./utils/config";
 import config from "../server_config.json";
+import { Routes } from "./routes";
+import  { DatabaseUtil } from "./utils/db";
 
 export class ExpressServer {
     public static server: any = null;
@@ -17,6 +19,13 @@ export class ExpressServer {
         app.get('/ping', (req: Request, res: Response) => {
             res.send('pong');
         });
+
+        const routes = new Routes(app);
+        if (routes) {
+            console.log('Server Routes started for server');
+        }
+
+        new DatabaseUtil();
 
         ExpressServer.server = app.listen(port, () => {
             console.log(`Server is running on port ${port} with pid = ${process.pid}`);
