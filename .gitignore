@@ -2,6 +2,7 @@
 .idea/
 dist/
 node_modules/
+md/
 
 .env
 server_config.json
