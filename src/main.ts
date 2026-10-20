@@ -1,8 +1,14 @@
 import cluster from "cluster";
 import os from "os";
 import { ExpressServer } from "./express_server";
+import { DDLUtil } from "./utils/ddl_util";
 
-if (cluster.isPrimary) {
+if (process.argv.includes('--init')) {
+    console.log(`Proceso Maestro PID: ${process.pid}`);
+    DDLUtil.addDefaultRoleAndUser().then(() => {
+        process.exit(0);
+    });
+} else if (cluster.isPrimary) {
     const numCPUs = os.cpus().length;
     console.log(`Master process ${process.pid} is running. Forking for ${numCPUs} CPUs...`);
 
