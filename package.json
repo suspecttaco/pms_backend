@@ -19,6 +19,7 @@
     "jsonwebtoken": "^9.0.3",
     "nodemailer": "^10.1.7",
     "pg": "^8.23.1",
+    "redis": "^6.3.0",
     "reflect-metadata": "^0.2.2",
     "typeorm": "^1.1.2"
   },
@@ -29,6 +30,7 @@
     "@types/node": "^26.6.5",
     "@types/nodemailer": "^8.0.2",
     "@types/pg": "^8.23.1",
+    "@types/redis": "^4.0.10",
     "nodemon": "^1.14.10",
     "ts-node": "^10.9.2",
     "typescript": "^5.9.3"

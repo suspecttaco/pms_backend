@@ -6,6 +6,7 @@ import { UserService } from "./users_service";
 import { DatabaseUtil } from "../../utils/db";
 import { hasPermission } from "../../utils/auth_util";
 import { sendMail } from "../../utils/email_util";
+import { CacheUtil } from "../../utils/cache_util";
 
 export class UserController {
     public async login(req: Request, res: Response): Promise<void> {
@@ -81,10 +82,18 @@ export class UserController {
             return;
         }
 
+        const userId = String(req.params.id);
+        const userFromCache = await CacheUtil.get('User', userId);
+        if (userFromCache) {
+            res.status(200).json({ statusCode: 200, status: 'success', data: userFromCache });
+            return;
+        }
+
         const service = new UserService();
-        const result = await service.findOne(String(req.params.id));
+        const result = await service.findOne(userId);
         if (result.statusCode === 200 && result.data) {
             delete (result.data as any).password;
+            CacheUtil.set('User', userId, result.data);
         }
         res.status(result.statusCode).json(result);
     }
@@ -115,6 +124,9 @@ export class UserController {
 
         const service = new UserService();
         const result = await service.delete(String(req.params.id));
+        if (result.statusCode === 200) {
+            CacheUtil.remove('User', String(req.params.id));
+        }
         res.status(result.statusCode).json(result);
     }
 

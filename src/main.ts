@@ -2,6 +2,8 @@ import cluster from "cluster";
 import os from "os";
 import { ExpressServer } from "./express_server";
 import { DDLUtil } from "./utils/ddl_util";
+import { CacheUtil } from "./utils/cache_util";
+import { UsersUtil } from "./utils/users_util";
 
 if (process.argv.includes('--init')) {
     console.log(`Proceso Maestro PID: ${process.pid}`);
@@ -22,6 +24,11 @@ if (process.argv.includes('--init')) {
     });
 
 } else {
+    new CacheUtil();
+    setTimeout(() => {
+        UsersUtil.putAllUsersInCache();
+    }, 10000);
+
     const server = new ExpressServer();
 
     process.on('uncaughtException', (error: Error) => {
