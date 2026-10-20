@@ -19,6 +19,7 @@
     "express": "^5.3.0",
     "express-validator": "^7.3.2",
     "jsonwebtoken": "^9.0.3",
+    "level": "^10.0.0",
     "nodemailer": "^10.1.7",
     "pg": "^8.23.1",
     "redis": "^6.3.0",
@@ -49,6 +50,7 @@
     "typescript": "^5.9.3"
   },
   "allowScripts": {
-    "nodemon@1.19.4": true
+    "nodemon@1.19.4": true,
+    "classic-level@3.0.0": true
   }
 }
