@@ -1,6 +1,8 @@
 import { Request, Response } from "express";
 import { TaskService } from "./tasks_service";
 import { hasPermission } from "../../utils/auth_util";
+import { ProjectsUtil } from "../../utils/projects_util";
+import { NotificationUtil } from "../../utils/notification_util";
 
 export class TaskController {
     public async addHandler(req: Request, res: Response): Promise<void> {
@@ -12,6 +14,21 @@ export class TaskController {
         try {
             const service = new TaskService();
             const result = await service.create(req.body);
+            if (result.statusCode === 201 && result.data) {
+                const task = result.data as any;
+                try {
+                    const memberEmails = await ProjectsUtil.getProjectMemberEmails(task.project_id);
+                    for (const email of memberEmails) {
+                        await NotificationUtil.enqueueEmail(
+                            email,
+                            `Nueva Tarea Creada: ${task.name}`,
+                            `<p>Hola, se ha creado la tarea <b>${task.name}</b> en tu proyecto.</p>`
+                        );
+                    }
+                } catch (e) {
+                    // no bloquear
+                }
+            }
             res.status(result.statusCode).json(result);
         } catch (error: any) {
             if (error.code === '23505') {

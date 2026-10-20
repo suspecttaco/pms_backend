@@ -4,6 +4,7 @@ import { ExpressServer } from "./express_server";
 import { DDLUtil } from "./utils/ddl_util";
 import { CacheUtil } from "./utils/cache_util";
 import { UsersUtil } from "./utils/users_util";
+import { QueueWorker } from "./workers/queue_worker";
 
 if (process.argv.includes('--init')) {
     console.log(`Proceso Maestro PID: ${process.pid}`);
@@ -28,6 +29,8 @@ if (process.argv.includes('--init')) {
     setTimeout(() => {
         UsersUtil.putAllUsersInCache();
     }, 10000);
+    const queueWorker = new QueueWorker();
+    queueWorker.beginProcessing();
 
     const server = new ExpressServer();
 
