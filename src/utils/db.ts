@@ -43,4 +43,8 @@ export class DatabaseUtil {
     public createQueryRunner(): QueryRunner {
         return this.dataSource.createQueryRunner();
     }
+
+    public getDataSource(): DataSource {
+        return this.dataSource;
+    }
 }
