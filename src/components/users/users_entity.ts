@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, ManyToOne, JoinColumn } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, ManyToMany, JoinTable } from "typeorm";
 import { Roles } from "../roles/roles_entity";
 
 @Entity()
@@ -18,9 +18,13 @@ export class Users {
     @Column({ nullable: false })
     password!: string;
 
-    @ManyToOne(() => Roles)
-    @JoinColumn({ name: 'role_id' })
-    role_id!: Roles['role_id'];
+    @ManyToMany(() => Roles)
+    @JoinTable({
+        name: 'user_roles',
+        joinColumn: { name: 'user_id', referencedColumnName: 'user_id' },
+        inverseJoinColumn: { name: 'role_id', referencedColumnName: 'role_id' }
+    })
+    role_ids!: string[];
 
     @CreateDateColumn()
     created_at!: Date;
