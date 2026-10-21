@@ -13,5 +13,5 @@
         "skipLibCheck": true,
         "forceConsistentCasingInFileNames": true
     },
-    "include": ["src/**/*", "server_config.json"]
+    "include": ["src/**/*", "examples/**/*", "server_config.json"]
 }

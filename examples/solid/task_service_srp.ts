@@ -1,5 +1,5 @@
-import { Task } from '../../domain/task.entity';
-import { ITaskRepository } from '../../repositories/task_repository.interface';
+import { Task } from '../domain/task.entity';
+import { ITaskRepository } from '../repositories/task_repository.interface';
 import { INotificationService } from './notification_service.interface';
 import { TaskValidator } from './task_validator';
 
