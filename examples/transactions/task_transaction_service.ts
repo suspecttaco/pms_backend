@@ -1,6 +1,6 @@
 import { DataSource, QueryRunner } from 'typeorm';
-import { Tasks, Status } from '../../components/tasks/tasks_entity';
-import { Projects } from '../../components/projects/projects_entity';
+import { Tasks, Status } from '../../src/components/tasks/tasks_entity';
+import { Projects } from '../../src/components/projects/projects_entity';
 
 export class TaskTransactionService {
     constructor(private readonly dataSource: DataSource) {}

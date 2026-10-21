@@ -1,7 +1,7 @@
 // src/controllers/analytics_controller.ts
 import { Request, Response } from 'express';
 import path from 'node:path';
-import { WorkerPool } from '../utils/worker_pool';
+import { WorkerPool } from '../worker_pool';
 
 // Inicializamos un pool de 4 hilos apuntando al archivo del worker compilado
 const pool = new WorkerPool(

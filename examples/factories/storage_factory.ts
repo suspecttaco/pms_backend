@@ -1,4 +1,4 @@
-import { DiskStorageService, S3StorageService, IStorageService } from '../services/storage_service';
+import { DiskStorageService, S3StorageService, IStorageService } from '../../src/services/storage_service';
 
 export type StorageType = 'local' | 's3';
 
